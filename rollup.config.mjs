@@ -8,7 +8,7 @@ export default [
   {
     input: 'src/index.ts',
     output: {
-      file: 'build/jsonpad-realtime.js',
+      file: 'build/jsonpad-realtime-sdk.js',
       format: 'umd',
       name: 'JSONPadRealtime',
     },
@@ -28,7 +28,7 @@ export default [
   {
     input: './build/index.d.ts',
     output: [{
-      file: 'build/jsonpad-realtime.d.ts',
+      file: 'build/jsonpad-realtime-sdk.d.ts',
       format: 'es',
     }],
     plugins: [dts()],

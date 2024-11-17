@@ -1,12 +1,18 @@
 import { io, Socket } from 'socket.io-client';
 import * as constants from './constants';
-import { EventType, MessageType } from './types';
+import { ItemEvent } from './events/item-event';
+import { ListEvent } from './events/list-event';
+import { EventDetail, EventType, Item, List, MessageType } from './types';
 
 export class JSONPadRealtime extends EventTarget {
   private static readonly connected = new Event('connected');
   private static readonly disconnected = new Event('disconnected');
 
   private socket: Socket | null = null;
+
+  public get connected() {
+    return this.socket?.connected ?? false;
+  }
 
   /**
    * Create a new JSONPad realtime client instance
@@ -63,6 +69,10 @@ export class JSONPadRealtime extends EventTarget {
     this.socket.on('list-deleted', this.handleEvent.bind(this, 'list-deleted'));
     this.socket.on('item-created', this.handleEvent.bind(this, 'item-created'));
     this.socket.on('item-updated', this.handleEvent.bind(this, 'item-updated'));
+    this.socket.on(
+      'item-restored',
+      this.handleEvent.bind(this, 'item-restored')
+    );
     this.socket.on('item-deleted', this.handleEvent.bind(this, 'item-deleted'));
   }
 
@@ -79,7 +89,7 @@ export class JSONPadRealtime extends EventTarget {
   }
 
   private handleEvent(messageType: MessageType, data: string) {
-    let parsedData: any;
+    let parsedData: EventDetail<any>;
     try {
       parsedData = JSON.parse(data);
     } catch (error) {
@@ -87,6 +97,48 @@ export class JSONPadRealtime extends EventTarget {
       return;
     }
 
-    this.dispatchEvent(new CustomEvent(messageType, { detail: parsedData }));
+    switch (messageType) {
+      case 'list-created':
+        this.dispatchEvent(
+          new ListEvent('list-created', parsedData as EventDetail<List>)
+        );
+        break;
+
+      case 'list-updated':
+        this.dispatchEvent(
+          new ListEvent('list-updated', parsedData as EventDetail<List>)
+        );
+        break;
+
+      case 'list-deleted':
+        this.dispatchEvent(
+          new ListEvent('list-deleted', parsedData as EventDetail<List>)
+        );
+        break;
+
+      case 'item-created':
+        this.dispatchEvent(
+          new ItemEvent('item-created', parsedData as EventDetail<Item>)
+        );
+        break;
+
+      case 'item-updated':
+        this.dispatchEvent(
+          new ItemEvent('item-updated', parsedData as EventDetail<Item>)
+        );
+        break;
+
+      case 'item-restored':
+        this.dispatchEvent(
+          new ItemEvent('item-restored', parsedData as EventDetail<Item>)
+        );
+        break;
+
+      case 'item-deleted':
+        this.dispatchEvent(
+          new ItemEvent('item-deleted', parsedData as EventDetail<Item>)
+        );
+        break;
+    }
   }
 }

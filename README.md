@@ -31,9 +31,11 @@ const jsonpadRealtime = new JSONPadRealtime('your-api-token');
 Browser:
 
 ```html
-<script src="jsonpad-realtime-sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@basementuniverse/jsonpad-realtime-sdk@1.0.0/build/jsonpad-realtime-sdk.js"></script>
 <script>
-  const jsonpadRealtime = new JSONPadRealtime.default('your-api-token');
+
+const jsonpadRealtime = new JSONPadRealtime.default('your-api-token');
+
 </script>
 ```
 
@@ -122,7 +124,7 @@ The event object passed to the event listener has the following properties:
 ```ts
 {
   type: string;
-  detail: {
+  details: {
     listId: string;
     itemId: string;
     model: any; // This will be a List or Item, depending on the event type
