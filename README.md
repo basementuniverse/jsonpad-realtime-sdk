@@ -31,7 +31,7 @@ const jsonpadRealtime = new JSONPadRealtime('your-api-token');
 Browser:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@basementuniverse/jsonpad-realtime-sdk@1.0.0/build/jsonpad-realtime-sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@basementuniverse/jsonpad-realtime-sdk@1.2.1/build/jsonpad-realtime-sdk.js"></script>
 <script>
 
 const jsonpadRealtime = new JSONPadRealtime.default('your-api-token');
@@ -81,31 +81,45 @@ The `listen()` method takes an array of event types to listen for. You can pass 
 - `item-restored`
 - `item-deleted`
 
-You can also optionally pass in an array of list ids and item ids to listen for.
-
-You can include `*` in the list ids and item ids arrays to listen for all lists or items.
+You can also optionally pass in an array of list ids or path names, and item ids or aliases to listen for. For example:
 
 ```js
 jsonpadRealtime.listen(
   [
-    'list-created',
     'list-updated',
-    'list-deleted',
-    'item-created',
     'item-updated',
-    'item-restored',
-    'item-deleted',
   ],
   [
     '86059de7-9b16-4469-a630-23c8f69944b6',
     'a2c706a6-5212-4e8a-92ad-bce1beea153f',
+    'my-list',
   ],
   [
     'e0bc4797-303a-49ff-b7b4-18781cc2460e',
     '06ad5a22-c002-4c67-92bc-83ec85014461',
+    'my-item',
   ]
 );
 ```
+
+This will listen for `list-updated` events on the lists with ids `86059de7-9b16-4469-a630-23c8f69944b6` and `a2c706a6-5212-4e8a-92ad-bce1beea153f`, and the list with the path name `my-list` (provided those lists belong to the user who owns the token being used to authenticate).
+
+It will also listen for `item-updated` events on the items with ids `e0bc4797-303a-49ff-b7b4-18781cc2460e` and `06ad5a22-c002-4c67-92bc-83ec85014461`, and the item with the alias `my-item` (again, provided those items belong to the user who owns the token being used to authenticate).
+
+You can include `*` in the list ids and item ids arrays to listen for all lists or items. For example:
+
+```js
+jsonpadRealtime.listen(
+  [
+    'list-updated',
+    'item-updated',
+  ],
+  ['*'],
+  ['*']
+);
+```
+
+This will listen for any list being updated, and any item being updated.
 
 ## Event types
 

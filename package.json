@@ -1,6 +1,6 @@
 {
   "name": "@basementuniverse/jsonpad-realtime-sdk",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "JSONPad Realtime SDK for Node and browser",
   "author": "Gordon Larrigan <gordonlarrigan@gmail.com> (https://gordonlarrigan.com)",
   "license": "MIT",
