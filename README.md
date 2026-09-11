@@ -69,6 +69,27 @@ If you want to stop listening for events and disconnect from the server, you can
 jsonpadRealtime.close();
 ```
 
+## Connection limits
+
+Each plan limits how many realtime connections one account can hold open at the same time, counted across all of its tokens. A connection beyond that limit is refused while it is connecting, and arrives as an `error` event:
+
+```js
+jsonpadRealtime.addEventListener('error', e => {
+  console.log(e.detail); // The error message
+  console.log(e.errorName); // e.g. 'REALTIME_CONNECTION_LIMIT_EXCEEDED'
+  console.log(e.code); // e.g. 10015
+  console.log(e.max); // How many connections your plan allows
+  console.log(e.retryAfter); // How long the server asked us to wait, in seconds
+  console.log(e.retryIn); // How long until this client retries, or null
+});
+```
+
+A connection that drops without closing cleanly keeps its slot on the server until the server notices it has gone, which takes up to 45 seconds. A client that reconnects immediately can therefore be refused for a limit it is no longer over, so this SDK retries a refused connection by itself, backing off from the delay the server asked for. Pass `retry: false` if you would rather handle it yourself:
+
+```js
+const jsonpadRealtime = new JSONPadRealtime('your-api-token', { retry: false });
+```
+
 ## `listen()` method
 
 The `listen()` method takes an array of event types to listen for. You can pass in any of the following event types:
