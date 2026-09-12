@@ -166,3 +166,13 @@ The event object passed to the event listener has the following properties:
   };
 }
 ```
+
+## Guard indexes
+
+If a list has any [guard indexes](https://jsonpad.io/documentation/indexing), the
+values they point at are removed from an item's `data` before the event is
+published, so they never reach a realtime client.
+
+Realtime connections authenticate with an API token and can't use an identity,
+so there is no realtime equivalent of the API's `includeGuarded` parameter. Read
+a guarded value through the API instead, as the identity that owns the item.
