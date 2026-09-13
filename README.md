@@ -90,6 +90,8 @@ A connection that drops without closing cleanly keeps its slot on the server unt
 const jsonpadRealtime = new JSONPadRealtime('your-api-token', { retry: false });
 ```
 
+The same happens if you subscribe to items by alias while one of your alias indexes is still being built: the connection is refused with `INDEX_BUILDING` (code 16006), and retried once the server's suggested delay has passed. Subscribing by item id always works.
+
 ## `listen()` method
 
 The `listen()` method takes an array of event types to listen for. You can pass in any of the following event types:

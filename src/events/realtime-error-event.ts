@@ -9,7 +9,8 @@ import { RealtimeErrorData } from '../types';
  */
 export class RealtimeErrorEvent extends CustomEvent<string> {
   /**
-   * The jsonpad error code, e.g. 10015, or null if the error didn't come from
+   * The jsonpad error code, e.g. 10015 (too many connections) or 16006 (an
+   * alias index is still being built), or null if the error didn't come from
    * the server
    */
   public readonly code: number | null;
