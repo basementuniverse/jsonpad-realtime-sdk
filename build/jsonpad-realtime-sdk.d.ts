@@ -6,12 +6,20 @@ type EventDetail<T extends object> = {
 
 type EventType = 'list-created' | 'list-updated' | 'list-deleted' | 'item-created' | 'item-updated' | 'item-restored' | 'item-deleted';
 
+/**
+ * An item, as it arrives in a realtime event
+ *
+ * Realtime clients authenticate with an API token and never with an identity,
+ * so any value covered by a guard index in the item's list has already been
+ * removed from `data` before the event was published
+ */
 type Item = {
     id: string;
     createdAt: Date;
     updatedAt: Date;
     data: any;
     description: string;
+    tags: string[];
     version: string;
     readonly: boolean;
     activated: boolean;
@@ -49,6 +57,7 @@ type List = {
     };
     name: string;
     description: string;
+    tags: string[];
     pathName: string;
     schema: any;
     pinned: boolean;

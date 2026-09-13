@@ -13,6 +13,7 @@ export type List = {
   };
   name: string;
   description: string;
+  tags: string[];
   pathName: string;
   schema: any;
   pinned: boolean;

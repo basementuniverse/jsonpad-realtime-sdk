@@ -11,6 +11,7 @@ export type Item = {
   updatedAt: Date;
   data: any;
   description: string;
+  tags: string[];
   version: string;
   readonly: boolean;
   activated: boolean;
