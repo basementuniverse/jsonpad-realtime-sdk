@@ -8,6 +8,12 @@ and this package adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Dates are npm publish dates. Entries up to and including 1.2.1 were backfilled
 on 2026-09-14 from git history and are deliberately brief.
 
+## [1.5.1] - 2026-09-14
+
+### Added
+
+- This changelog was added in version 1.5.1.
+
 ## [1.5.0] - 2026-09-13
 
 ### Added
