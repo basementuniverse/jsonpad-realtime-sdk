@@ -8,6 +8,26 @@ and this package adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Dates are npm publish dates. Entries up to and including 1.2.1 were backfilled
 on 2026-09-14 from git history and are deliberately brief.
 
+## [1.6.0] - 2026-09-16
+
+### Fixed
+
+- The SDK now works in Node. `listen()` never connected there, and never
+  dispatched an error: the only build bundled socket.io-client's browser build,
+  which connects with `XMLHttpRequest`, and Node doesn't have one. A
+  `XMLHttpRequest` polyfill is no longer needed.
+
+### Changed
+
+- The package has a separate CommonJS build for Node,
+  `build/jsonpad-realtime-sdk.node.js`, which `main` now points to. It loads
+  `socket.io-client` (already a dependency) instead of bundling it, so Node gets
+  socket.io-client's Node build. `require()` and `import` give the same exports
+  as before.
+- The UMD build, `build/jsonpad-realtime-sdk.js`, is unchanged, and is still
+  what a script tag loads from a CDN. The `browser`, `jsdelivr` and `unpkg`
+  fields point to it, so bundlers targeting the browser keep using it.
+
 ## [1.5.1] - 2026-09-14
 
 ### Added

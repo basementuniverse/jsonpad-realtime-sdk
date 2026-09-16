@@ -5,6 +5,8 @@ import typescript from '@rollup/plugin-typescript';
 import { dts } from "rollup-plugin-dts";
 
 export default [
+  // Browser build: a self-contained UMD bundle for script tags and CDNs, with
+  // socket.io-client's browser build bundled in
   {
     input: 'src/index.ts',
     output: {
@@ -24,6 +26,23 @@ export default [
       }),
       terser(),
     ].filter(Boolean),
+  },
+  // Node build: CommonJS, with socket.io-client left as a dependency so that
+  // Node resolves socket.io-client's own Node build, which connects without
+  // XMLHttpRequest
+  {
+    input: 'src/index.ts',
+    output: {
+      file: 'build/jsonpad-realtime-sdk.node.js',
+      format: 'cjs',
+      exports: 'named',
+    },
+    external: ['socket.io-client'],
+    plugins: [
+      typescript({
+        declaration: false,
+      }),
+    ],
   },
   {
     input: './build/index.d.ts',

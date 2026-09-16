@@ -12,7 +12,10 @@
   "bugs": {
     "url": "https://github.com/basementuniverse/jsonpad-realtime-sdk/issues"
   },
-  "main": "build/jsonpad-realtime-sdk.js",
+  "main": "build/jsonpad-realtime-sdk.node.js",
+  "browser": "build/jsonpad-realtime-sdk.js",
+  "jsdelivr": "build/jsonpad-realtime-sdk.js",
+  "unpkg": "build/jsonpad-realtime-sdk.js",
   "types": "build/jsonpad-realtime-sdk.d.ts",
   "scripts": {
     "build": "rollup -c && npm run clean",
